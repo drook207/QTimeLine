@@ -1,29 +1,29 @@
-#include "timeentry.h"
+#include "timerecord.h"
 namespace QTimeLine {
 
-TimeEntry::TimeEntry(const TimeEntry &entry, QObject *parent)
+TimeRecord::TimeRecord(const TimeRecord &entry, QObject *parent)
 	: QObject{parent} {
   *this = entry;
 }
 
-TimeEntry::TimeEntry(const TimeEntry &&entry, QObject *parent)
+TimeRecord::TimeRecord(const TimeRecord &&entry, QObject *parent) noexcept
 	: QObject{parent} {
   *this = std::move(entry);
 }
 
-TimeEntry::TimeEntry(quint64 id, const QString &description,
+TimeRecord::TimeRecord(quint64 id, const QString &description,
 					 const QString &date, const QString &begin,
 					 const QString &end, const QString &duration)
 	: mId(id), mDescription(description), mDate(date), mBegin(begin), mEnd(end),
 	  mDuration(duration), mIsValid(true) {}
 
-TimeEntry::TimeEntry(quint64 id, const QString &description,
+TimeRecord::TimeRecord(quint64 id, const QString &description,
 					 const QDateTime &date, const QString &begin,
 					 const QString &end, const QString &duration)
 	: mId(id), mDescription(description), mDate(date.toString()), mBegin(begin),
 	  mEnd(end), mDuration(duration), mIsValid(true) {}
 
-TimeEntry &TimeEntry::operator=(const TimeEntry &other) {
+TimeRecord &TimeRecord::operator=(const TimeRecord &other) {
   this->mId = other.mId;
   this->mDescription = other.mDescription;
   this->mDate = other.mDate;
@@ -33,7 +33,7 @@ TimeEntry &TimeEntry::operator=(const TimeEntry &other) {
   return *this;
 }
 
-TimeEntry &TimeEntry::operator=(const TimeEntry &&other) {
+TimeRecord &TimeRecord::operator=(TimeRecord &&other) noexcept {
   this->mId = std::move(other.mId);
   this->mDescription = std::move(other.mDescription);
   this->mDate = std::move(other.mDate);
@@ -43,15 +43,15 @@ TimeEntry &TimeEntry::operator=(const TimeEntry &&other) {
   return *this;
 }
 
-bool TimeEntry::operator==(const TimeEntry &other) {
-  return this->mId == other.mId;
+auto operator==(const TimeRecord &lhs, const TimeRecord &rhs) -> bool const {
+  return lhs.mId == rhs.mId;
 }
 
-bool TimeEntry::operator!=(const TimeEntry &other) {
-  return this->mId != other.mId;
+auto operator!=(const TimeRecord &lhs, const TimeRecord &rhs) -> bool const {
+  return lhs.mId != rhs.mId;
 }
 
-bool TimeEntry::isValid() const { return mIsValid; }
+bool TimeRecord::isValid() const { return mIsValid; }
 
-TimeEntry::TimeEntry() : mIsValid(false) {}
+TimeRecord::TimeRecord() : mIsValid(false) {}
 } // namespace QTimeLine

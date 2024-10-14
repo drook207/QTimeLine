@@ -1,5 +1,4 @@
 import QtQuick
-import QTimeline
 import QTimelineControls
 
 Window {

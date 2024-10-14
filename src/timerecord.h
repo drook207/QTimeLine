@@ -5,28 +5,28 @@
 namespace QTimeLine {
 // forewarding
 
-class TimeEntryManager;
+class TimeRecordDatabaseManager;
 /*!
  * \brief The TimeEntry class
  */
-class TimeEntry : public QObject {
+class TimeRecord : public QObject {
   Q_OBJECT
 public:
-  TimeEntry();
+  TimeRecord();
   /*!
-   * \brief TimeEntry
+   * \brief TimeRecord
    * \param entry
    * \param parent
    */
-  explicit TimeEntry(const TimeEntry &entry, QObject *parent = nullptr);
+  TimeRecord(const TimeRecord &entry, QObject *parent = nullptr);
   /*!
-   * \brief TimeEntry
+   * \brief TimeRecord
    * \param entry
    * \param parent
    */
-  explicit TimeEntry(const TimeEntry &&entry, QObject *parent = nullptr);
+  TimeRecord(const TimeRecord &&entry, QObject *parent = nullptr) noexcept;
   /*!
-   * \brief TimeEntry
+   * \brief TimeRecord
    * \param id
    * \param description
    * \param date
@@ -34,10 +34,10 @@ public:
    * \param end
    * \param duration
    */
-  TimeEntry(quint64 id, const QString &description, const QString &date,
+  TimeRecord(quint64 id, const QString &description, const QString &date,
 			const QString &begin, const QString &end, const QString &duration);
   /*!
-   * \brief TimeEntry
+   * \brief TimeRecord
    * \param id
    * \param description
    * \param date
@@ -45,43 +45,43 @@ public:
    * \param end
    * \param duration
    */
-  TimeEntry(quint64 id, const QString &description, const QDateTime &date,
+  TimeRecord(quint64 id, const QString &description, const QDateTime &date,
 			const QString &begin, const QString &end, const QString &duration);
 
-  ~TimeEntry() = default;
+  ~TimeRecord() override = default;
 
   /*!
    * \brief operator =
    * \param other
    * \return
    */
-  TimeEntry &operator=(const TimeEntry &other);
+  TimeRecord &operator=(const TimeRecord &other);
   /*!
    * \brief operator =
    * \param other
    * \return
    */
-  TimeEntry &operator=(const TimeEntry &&other);
+  TimeRecord &operator=(TimeRecord &&other) noexcept;
 
   /*!
    * \brief operator ==
    * \param other
    * \return
    */
-  bool operator==(const TimeEntry &other);
+  friend auto operator==(const TimeRecord &lhs,
+						 const TimeRecord &rhs) -> bool const;
 
   /*!
    * \brief operator !=
    * \param other
    * \return
    */
-  bool operator!=(const TimeEntry &other);
+  friend auto operator!=(const TimeRecord &lhs,
+						 const TimeRecord &rhs) -> bool const;
 
-  bool isValid() const;
+  [[nodiscard]] bool isValid() const;
 
-  friend class TimeEntryManager;
-
-signals:
+  friend class TimeRecordDatabaseManager;
 
 protected:
   quint64 mId{};

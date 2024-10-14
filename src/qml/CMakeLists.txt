@@ -1,3 +1,5 @@
+find_package(Qt6 6.5 REQUIRED Core Quick Qml)
+
 set_source_files_properties(Singletons/Colors.qml
 							PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 

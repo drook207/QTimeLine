@@ -1,17 +1,22 @@
-#include "timeentrymanager.h"
+#include "timerecorddatabasemanager.h"
 #include <QSqlQuery>
 
 namespace QTimeLine {
 
 Q_LOGGING_CATEGORY(lcTimeEntryManager, "qtimeline.timeentry.manager")
 
-TimeEntryManager::TimeEntryManager(QSharedPointer<SqlStorage> storage,
-								   QObject *parent)
+TimeRecordDatabaseManager::TimeRecordDatabaseManager(
+	QSharedPointer<SqlStorage> storage, QObject *parent)
 	: QObject{parent}, mStorage(storage) {}
 
-TimeEntry TimeEntryManager::entryFromId(const quint64 id) {}
+TimeRecord TimeRecordDatabaseManager::entryFromId(const quint64 id) { return {}; }
 
-bool TimeEntryManager::add(const TimeEntry &entry) const {
+TimeRecord
+TimeRecordDatabaseManager::entryFromDescription(const QString &description) {
+  return {};
+}
+
+bool TimeRecordDatabaseManager::addEntry(const TimeRecord &entry) const {
   if (mStorage.isNull()) {
 	qWarning(lcTimeEntryManager) << "Sql storage is invalid";
 	return false;
@@ -32,6 +37,17 @@ bool TimeEntryManager::add(const TimeEntry &entry) const {
 	return false;
   }
   query.bindValue(":id", entry.mId);
+  query.bindValue(":description", entry.mDescription);
+  query.bindValue(":date", entry.mDate);
+  query.bindValue(":begin", entry.mBegin);
+  query.bindValue(":end", entry.mEnd);
+  query.bindValue(":duration", entry.mDuration);
+
+  if (!query.exec()) {
+	return false;
+  }
+
+  return true;
 }
 
 } // namespace QTimeLine

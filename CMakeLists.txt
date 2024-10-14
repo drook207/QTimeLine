@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.29.3)
 
 project(QTimeline LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED  TRUE)
 
 find_package(Qt6 6.5 REQUIRED Core Quick Qml)
 
