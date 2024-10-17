@@ -11,15 +11,15 @@ TimeRecord::TimeRecord(const TimeRecord &&entry, QObject *parent) noexcept
   *this = std::move(entry);
 }
 
-TimeRecord::TimeRecord(quint64 id, const QString &description,
-					 const QString &date, const QString &begin,
-					 const QString &end, const QString &duration)
+TimeRecord::TimeRecord(QString id, const QString &description,
+					   const QString &date, const QString &begin,
+					   const QString &end, const QString &duration)
 	: mId(id), mDescription(description), mDate(date), mBegin(begin), mEnd(end),
 	  mDuration(duration), mIsValid(true) {}
 
-TimeRecord::TimeRecord(quint64 id, const QString &description,
-					 const QDateTime &date, const QString &begin,
-					 const QString &end, const QString &duration)
+TimeRecord::TimeRecord(QString id, const QString &description,
+					   const QDateTime &date, const QString &begin,
+					   const QString &end, const QString &duration)
 	: mId(id), mDescription(description), mDate(date.toString()), mBegin(begin),
 	  mEnd(end), mDuration(duration), mIsValid(true) {}
 

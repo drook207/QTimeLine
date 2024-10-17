@@ -9,24 +9,26 @@ TimeRecordDatabaseManager::TimeRecordDatabaseManager(
 	QSharedPointer<SqlStorage> storage, QObject *parent)
 	: QObject{parent}, mStorage(storage) {}
 
-TimeRecord TimeRecordDatabaseManager::entryFromId(const quint64 id) { return {}; }
+TimeRecord TimeRecordDatabaseManager::entryFromId(const quint64 id) {
+  return {};
+}
 
 TimeRecord
 TimeRecordDatabaseManager::entryFromDescription(const QString &description) {
   return {};
 }
 
-bool TimeRecordDatabaseManager::addEntry(const TimeRecord &entry) const {
+void TimeRecordDatabaseManager::addEntry(const TimeRecord &entry) {
   if (mStorage.isNull()) {
 	qWarning(lcTimeEntryManager) << "Sql storage is invalid";
-	return false;
+	return;
   }
 
   auto db = mStorage->database();
 
   if (!db.isValid() || !db.isOpen()) {
 	qWarning(lcTimeEntryManager) << "Sql storage is invalid";
-	return false;
+	return;
   }
 
   QSqlQuery query;
@@ -34,7 +36,7 @@ bool TimeRecordDatabaseManager::addEntry(const TimeRecord &entry) const {
   if (!query.prepare("INSERT INTO timeEntries (id, description, date, begin, "
 					 "end, duration) VALUES (:id, :description, :date, :begin, "
 					 ":end, :duration) ")) {
-	return false;
+	return;
   }
   query.bindValue(":id", entry.mId);
   query.bindValue(":description", entry.mDescription);
@@ -44,10 +46,10 @@ bool TimeRecordDatabaseManager::addEntry(const TimeRecord &entry) const {
   query.bindValue(":duration", entry.mDuration);
 
   if (!query.exec()) {
-	return false;
+	return;
   }
 
-  return true;
+  return;
 }
 
 } // namespace QTimeLine

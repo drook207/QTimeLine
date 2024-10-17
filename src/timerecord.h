@@ -34,8 +34,8 @@ public:
    * \param end
    * \param duration
    */
-  TimeRecord(quint64 id, const QString &description, const QString &date,
-			const QString &begin, const QString &end, const QString &duration);
+  TimeRecord(QString id, const QString &description, const QString &date,
+			 const QString &begin, const QString &end, const QString &duration);
   /*!
    * \brief TimeRecord
    * \param id
@@ -45,8 +45,8 @@ public:
    * \param end
    * \param duration
    */
-  TimeRecord(quint64 id, const QString &description, const QDateTime &date,
-			const QString &begin, const QString &end, const QString &duration);
+  TimeRecord(QString id, const QString &description, const QDateTime &date,
+			 const QString &begin, const QString &end, const QString &duration);
 
   ~TimeRecord() override = default;
 
@@ -82,9 +82,10 @@ public:
   [[nodiscard]] bool isValid() const;
 
   friend class TimeRecordDatabaseManager;
+  friend class TimeRecordModel;
 
 protected:
-  quint64 mId{};
+  QString mId{};
   QString mDescription{};
   QString mDate{};
   QString mBegin{};

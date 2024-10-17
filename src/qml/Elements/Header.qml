@@ -2,15 +2,19 @@ import QtQuick 2.15
 import QtQuick.Layouts 2.15
 import QtQuick.Controls
 import "../Singletons"
+import QTimelineControls
 
 Item {
 	property alias headline: hl.text
 	property alias borderColor: header.border.color
+	property bool isStarted: false
 
 	id: docroot
 
 	width: parent.width
 	height: parent.height
+
+
 
 	Rectangle {
 		id: header
@@ -25,28 +29,8 @@ Item {
 			Row {
 				width: parent.width
 				height: parent.height
-				Text {
-					id: hl
-					color: Colors.fontColor
-					font.family: "Hack"
-					styleColor: Colors.fontColor
-					font.pointSize: 15
-					anchors.margins: 10
-				}
+				spacing: 10
 
-				Text {
-					id: currentTime
-					color: Colors.fontColor
-					font.pointSize: 15
-					anchors.margins: 10
-					text: "00:00"
-				}
-			}
-			Button {
-
-				onClicked: {
-					console.log("foo")
-				}
 			}
 		}
 	}

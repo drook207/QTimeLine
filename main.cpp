@@ -1,3 +1,4 @@
+#include "timerecordmodel.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
@@ -8,6 +9,8 @@ int main(int argc, char *argv[]) {
   QObject::connect(
 	  &engine, &QQmlApplicationEngine::objectCreationFailed, &app,
 	  []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+  qmlRegisterType<QTimeLine::TimeRecordModel>("QTimelineControls", 1, 0,
+											  "TimeRecordModel");
   engine.addImportPath(":/qtimeline.imports");
   engine.loadFromModule("QTimelineControls", "Main");
 

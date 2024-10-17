@@ -15,12 +15,12 @@ class TimeRecordDatabaseManager : public QObject {
   Q_OBJECT
 public:
   explicit TimeRecordDatabaseManager(QSharedPointer<SqlStorage> storage,
-									QObject *parent = nullptr);
+									 QObject *parent = nullptr);
 public slots:
   TimeRecord entryFromId(const quint64 id);
   TimeRecord entryFromDescription(const QString &description);
 
-  bool addEntry(const TimeRecord &entry) const;
+  void addEntry(const TimeRecord &entry);
 
 signals:
 
