@@ -12,6 +12,14 @@ Window {
 	TimeRecordModel {
 		id: timeRecord
 	}
+
+	Connections {
+		target: timeRecord
+		function onStopped(record) {
+			TimeRecordDatabaseManager.addEntry(record)
+		}
+	}
+
 	Component.onCompleted: timeRecord.Description = "Project: xyz, Issue: 001"
 	Row {
 		anchors.fill: parent

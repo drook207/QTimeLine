@@ -16,7 +16,7 @@ public:
   Q_INVOKABLE void start();
   Q_INVOKABLE void stop();
 
-  [[nodiscard]] QTime Duration() const;
+  [[nodiscard]] QString Duration() const;
   void setDuration(const QTime &newDuration);
 
   [[nodiscard]] QString Description() const;
@@ -34,8 +34,8 @@ private:
   QTimer mTick{};
   QTime mDuration{};
   QString mDescription{};
-  Q_PROPERTY(QTime Duration READ Duration WRITE setDuration NOTIFY
-				 DurationChanged FINAL)
+  QString mBegin{};
+  Q_PROPERTY(QString Duration READ Duration NOTIFY DurationChanged FINAL)
   Q_PROPERTY(QString Description READ Description WRITE setDescription NOTIFY
 				 DescriptionChanged FINAL)
 };

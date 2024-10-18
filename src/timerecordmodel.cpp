@@ -1,4 +1,5 @@
 #include "timerecordmodel.h"
+#include <QDateTime>
 #include <QUuid>
 
 namespace QTimeLine {
@@ -6,29 +7,34 @@ namespace QTimeLine {
 TimeRecordModel::TimeRecordModel(QObject *parent) : QObject{parent} {
 
   mTick.setInterval(INTERVAL);
-
+  mDuration = QTime::fromString("00::00::00", "hh::mm::ss");
   connect(&mTick, &QTimer::timeout, this, [this]() {
-	quint64 duration = mDuration;
-	duration++;
-	setDuration(duration);
+	auto t = mDuration.addSecs(1);
+	setDuration(t);
   });
 }
 
 void TimeRecordModel::start() {
   mTick.start();
-  mElapsedTimer.start();
+  mBegin = mDuration.currentTime().toString();
 }
 
 void TimeRecordModel::stop() {
   mTick.stop();
-  auto elapsed = mElapsedTimer.elapsed();
   auto record = QSharedPointer<TimeRecord>(new TimeRecord);
   record->mId = QUuid::createUuid().toString();
-  record->mDuration = QString::number(elapsed);
+  record->mDuration = mDuration.toString();
+  record->mDescription = mDescription;
+  record->mDate = QDateTime::currentDateTime().date().toString();
+  record->mEnd = mDuration.currentTime().toString();
+  record->mBegin = mBegin;
+  auto duration = QTime::fromString("00::00::00", "hh::mm::ss");
+  setDuration(duration);
+
   emit stopped(record);
 }
 
-QTime TimeRecordModel::Duration() const { return mDuration; }
+QString TimeRecordModel::Duration() const { return mDuration.toString(); }
 
 void TimeRecordModel::setDuration(const QTime &newDuration) {
   if (mDuration == newDuration)

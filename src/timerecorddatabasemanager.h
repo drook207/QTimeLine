@@ -20,12 +20,13 @@ public slots:
   TimeRecord entryFromId(const quint64 id);
   TimeRecord entryFromDescription(const QString &description);
 
-  void addEntry(const TimeRecord &entry);
+  void addEntry(const QSharedPointer<TimeRecord> entry);
 
 signals:
 
 private:
   QSharedPointer<SqlStorage> mStorage{};
+  QList<QSharedPointer<TimeRecord>> mEntryList{};
 };
 
 } // namespace QTimeLine
