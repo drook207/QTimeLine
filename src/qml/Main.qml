@@ -20,33 +20,52 @@ Window {
 		}
 	}
 
-	Component.onCompleted: timeRecord.Description = "Project: xyz, Issue: 001"
 	Row {
 		anchors.fill: parent
-		spacing: 10
+		spacing: 5
+		Rectangle {
+			width: parent.width / 3
+			height: 40
+			color: Colors.darkGray
+			border.color: Colors.lightGray
+			TextInput {
+				anchors.fill: parent
+				text: timeRecord.Description
 
-		Text {
-			id: description
-			text: timeRecord.Description
-			color: Colors.fontColor
-			font.pointSize: 10
-		}
-
-		Text {
-			id: currentTime
-			color: Colors.fontColor
-			font.pointSize: 15
-			text: timeRecord.Duration
-		}
-		Button {
-			id: startBtn
-			flat: true
-			onClicked: {
-				isStarted === true ? timeRecord.stop() : timeRecord.start()
-				isStarted = !isStarted
-				startBtn.highlighted = !startBtn.highlighted
+				font.pointSize: 15
+				color: Colors.fontColor
+				onAccepted: timeRecord.Description = text
 			}
-			text: isStarted === true ? "Stop" : "Start"
+		}
+		Rectangle {
+			width: parent.width / 3
+			height: 40
+			color: Colors.darkGray
+			border.color: Colors.lightGray
+			Text {
+				id: currentTime
+				anchors.centerIn: parent
+				color: Colors.fontColor
+				font.pointSize: 15
+				text: timeRecord.Duration
+			}
+		}
+		Rectangle {
+			width: parent.width / 3
+			height: 40
+			color: Colors.darkGray
+			border.color: Colors.lightGray
+			Button {
+				id: startBtn
+				flat: true
+				anchors.centerIn: parent
+				onClicked: {
+					isStarted === true ? timeRecord.stop() : timeRecord.start()
+					isStarted = !isStarted
+					startBtn.highlighted = !startBtn.highlighted
+				}
+				text: isStarted === true ? "Stop" : "Start"
+			}
 		}
 	}
 }

@@ -49,7 +49,7 @@ void TimeRecordModel::setDescription(const QString &newDescription) {
   if (mDescription == newDescription)
 	return;
   mDescription = newDescription;
-  emit DurationChanged();
+  emit DescriptionChanged();
 }
 
 } // namespace QTimeLine
