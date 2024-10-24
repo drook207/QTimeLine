@@ -8,10 +8,10 @@ Item {
 	Rectangle {
 		anchors.fill: parent
 		color: Colors.darkGray
-		border.color: Colors.lightkGray
+		border.color: Colors.lightGray
 		Header {
 			headline: qsTr("Start")
-			borderColor: Colors.lightkGray
+			borderColor: Colors.lightGray
 		}
 	}
 }

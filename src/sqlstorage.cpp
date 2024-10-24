@@ -10,14 +10,14 @@ QSharedPointer<SqlStorage>
 SqlStorage::fromConnection(const QString &connectionName) {
   if (connectionName.isEmpty()) {
 	qWarning(lcSqlStorage()) << "Connetion name is empty!";
-	return QSharedPointer<SqlStorage>();
+	return {};
   }
 
   if (!QSqlDatabase::contains(connectionName)) {
 	qWarning(lcSqlStorage())
 		<< "QSqlDatabase::connectionNames() does not contain: "
 		<< connectionName;
-	return QSharedPointer<SqlStorage>();
+	return {};
   }
 
   auto dataBase = QSqlDatabase::database(connectionName);

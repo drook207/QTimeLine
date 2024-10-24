@@ -1,22 +1,27 @@
 import QtQuick 2.15
 import QtQuick.Layouts 2.15
+import QtQuick.Controls
 import "../Singletons"
+import QTimelineControls
 
 Item {
 	property alias headline: hl.text
 	property alias borderColor: header.border.color
+	property bool isStarted: false
 
 	id: docroot
 
 	width: parent.width
 	height: parent.height
 
+
+
 	Rectangle {
 		id: header
 		width: parent.width
-		height: parent.height * 0.2
+		height: parent.height * 0.1
 		color: Colors.darkGray
-		border.color: Colors.lightkGray
+		border.color: Colors.lightGray
 		border.width: 2
 		Column {
 			width: parent.width
@@ -24,16 +29,8 @@ Item {
 			Row {
 				width: parent.width
 				height: parent.height
-				Text {
-					id: hl
-					color: "white"
-					font.family: "Hack"
-					styleColor: "#cac7c7"
-					font.pointSize: 15
-					anchors.margins: 10
-				}
+				spacing: 10
 
-				RoundButton {}
 			}
 		}
 	}
